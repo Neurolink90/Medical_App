@@ -1,0 +1,10 @@
+excluded_files:
+- Medical Code Library 0.01 with Debugging and flagging.py
+- Medical Code Library 0.01.py
+- Medical Code Library 0.02.py
+- Medical Code Library 0.03.py
+- Medical Code Library 0.04.py
+- medical_code_library.py
+- test_medical_code_library.py
+- test_medical_library.py
+selected_directories: []
