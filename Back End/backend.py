@@ -51,7 +51,15 @@ def handle_exception(e):
     return jsonify(error="Internal Server Error"), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    @app.run(host="0.0.0.0", port=5000, debug=True)
+    app.route('/patients', methods=['GET'])
+def get_patients():
+    # Mock data; replace with database query
+    patients = [
+        {"name": "John Doe", "condition": "Hypertension", "date": "2025-10-01"},
+        {"name": "Jane Smith", "condition": "Diabetes", "date": "2025-09-15"}
+    ]
+    return jsonify(patients), 200
 
 
 
