@@ -35,3 +35,10 @@ class MedicalRecordsScreen extends StatelessWidget {
     );
   }
 }
+Future<List<Map<String, String>>> _fetchRecords() async {
+  final response = await http.get(Uri.parse('http://<your-flask-server>:5000/patients'));
+  if (response.statusCode == 200) {
+    return List<Map<String, String>>.from(jsonDecode(response.body));
+  }
+  throw Exception('Failed to load records');
+}
