@@ -1,9 +1,12 @@
-# Flutter & Dart
-.build/
+# Flutter/Dart
+build/
 .dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub/
 .pub-cache/
+*.g.dart
 flutter_*.png
 
 # Android
@@ -16,20 +19,28 @@ flutter_*.png
 /ios/Flutter/Flutter.framework
 /ios/Flutter/Flutter.podspec
 /ios/.generated
-/ios/Pods
+/ios/Pods/
 /ios/.symlinks
 /ios/Flutter/Generated.xcconfig
-
-# VS Code
-.vscode/
-.idea/
 
 # macOS
 /macos/Flutter/GeneratedPluginRegistrant.swift
 
-# Others
+# Python
+__pycache__/
+*.pyc
+.env
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# General
 *.log
 *.tmp
 *.swp
-*.DS_Store
-*.lock
+pubspec.lock  # Optional: include if you want to version-control dependencies
