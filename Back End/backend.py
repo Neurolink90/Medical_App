@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify
 from werkzeug.exceptions import HTTPException
+# backend.py  (add/replace the CORS line near the top)
 from flask_cors import CORS
+
+# Allow localhost (dev) and your future web domain
+CORS(app, resources={r"/*": {"origins": ["http://localhost:*", "https://neurolink90.github.io"]}})
 import logging
 
 # Initialize Flask app and enable CORS

@@ -15,7 +15,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String _errorMessage = '';
 
   Future<void> _login() async {
-    final url = Uri.parse('http://<your-flask-server>:5000/login'); // Replace with your server URL
+      final url = Uri.parse('https://medical-app-backend.herokuapp.com/login');
+  // or for local testing:
+  // final url = Uri.parse('http://localhost:5000/login');
     try {
       final response = await http.post(
         url,
