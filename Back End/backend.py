@@ -1,15 +1,13 @@
 from flask import Flask, request, jsonify
 from werkzeug.exceptions import HTTPException
-# backend.py  (add/replace the CORS line near the top)
 from flask_cors import CORS
-
-# Allow localhost (dev) and your future web domain
-CORS(app, resources={r"/*": {"origins": ["http://localhost:*", "https://neurolink90.github.io"]}})
 import logging
 
-# Initialize Flask app and enable CORS
+# Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Allows all domains to access all routes (adjust as needed for production)
+
+# Enable CORS for web (localhost + GitHub Pages)
+CORS(app, resources={r"/*": {"origins": ["http://localhost:*", "https://neurolink90.github.io"]}})
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -26,18 +24,26 @@ def log_request_info():
 def index():
     return jsonify(message="Hello from Flask")
 
-# ✅ Updated Login Route
+# Login Route
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()  # Parse JSON payload
+    data = request.get_json()
     email = data.get('email')
     password = data.get('password')
     
-    # ✅ Dummy authentication logic (Replace with real authentication)
     if email == "john@example.com" and password == "securepassword":
         return jsonify(success=True, message="Login successful", email=email)
     else:
         return jsonify(success=False, message="Invalid credentials"), 401
+
+# Patients Endpoint (MOVED OUTSIDE if __name__)
+@app.route('/patients', methods=['GET'])
+def get_patients():
+    patients = [
+        {"name": "John Doe", "condition": "Hypertension", "date": "2025-10-01"},
+        {"name": "Jane Smith", "condition": "Diabetes", "date": "2025-09-15"}
+    ]
+    return jsonify(patients), 200
 
 # 404 Error Handling
 @app.errorhandler(404)
@@ -54,16 +60,9 @@ def handle_exception(e):
     app.logger.error("Unhandled Exception: %s", e, exc_info=True)
     return jsonify(error="Internal Server Error"), 500
 
+# Run the app (ONLY this goes in if __name__)
 if __name__ == "__main__":
-    @app.run(host="0.0.0.0", port=5000, debug=True)
-    app.route('/patients', methods=['GET'])
-def get_patients():
-    # Mock data; replace with database query
-    patients = [
-        {"name": "John Doe", "condition": "Hypertension", "date": "2025-10-01"},
-        {"name": "Jane Smith", "condition": "Diabetes", "date": "2025-09-15"}
-    ]
-    return jsonify(patients), 200
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
 
 
