@@ -7,7 +7,7 @@ void main() {
 }
 
 class MedicalApp extends StatelessWidget {
-  const MedicalApp({Key? key}) : super(key: key);
+  const MedicalApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class MedicalApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
         textTheme: const TextTheme(
-          bodyText2: TextStyle(color: Colors.black87),
+          bodyMedium: TextStyle(color: Colors.black87), // Fixed: bodyText2 → bodyMedium
         ),
       ),
       initialRoute: '/login',
