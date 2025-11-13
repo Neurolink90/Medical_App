@@ -19,7 +19,7 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen> {
   }
 
   Future<List<Map<String, String>>> fetchRecords() async {
-    final response = await http.get(Uri.parse('http://localhost:5000/patients'));
+    final response = await http.get(Uri.parse('http://127.0.0.1:5000/patients'));
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       return data.cast<Map<String, String>>();
