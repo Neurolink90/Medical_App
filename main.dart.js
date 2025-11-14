@@ -78009,7 +78009,7 @@ return new A.BQ(new A.zT(B.ke,s),new A.zT(B.ke,s))}}
 A.BQ.prototype={
 uP(){var s=0,r=A.U(t.H),q=1,p=[],o=this,n,m,l,k,j,i,h
 var $async$uP=A.V(function(a,b){if(a===1){p.push(b)
-s=q}while(true)switch(s){case 0:i=A.hC("http://127.0.0.1:5000/login")
+s=q}while(true)switch(s){case 0:i=A.hC("https://medical-app-backend-2025.herokuapp.com/login")
 q=3
 l=t.N
 k=A.aw(["Content-Type","application/json"],l,l)
@@ -78066,7 +78066,7 @@ this.d=this.wO()},
 wO(){var s=0,r=A.U(t.b5),q,p
 var $async$wO=A.V(function(a,b){if(a===1)return A.R(b,r)
 while(true)switch(s){case 0:s=3
-return A.a1(A.aJL(A.hC("http://127.0.0.1:5000/patients")),$async$wO)
+return A.a1(A.aJL(A.hC("https://medical-app-backend-2025.herokuapp.com/patients")),$async$wO)
 case 3:p=b
 if(p.b===200){q=J.VG(B.cM.Q_(0,A.aJx(A.aHp(p.e).c.a.h(0,"charset")).fp(0,p.w),null),t.a)
 s=1
