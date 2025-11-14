@@ -10,7 +10,7 @@ class MedicalRecordsScreen extends StatefulWidget {
 }
 
 class _MedicalRecordsScreenState extends State<MedicalRecordsScreen> {
-  late Future<List<Map<String, String>>> futureRecords;
+  late Future<List<Map<String, dynamic>>> futureRecords;
 
   @override
   void initState() {
@@ -18,11 +18,11 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen> {
     futureRecords = fetchRecords();
   }
 
-  Future<List<Map<String, String>>> fetchRecords() async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:5000/patients'));
+  Future<List<Map<String, dynamic>>> fetchRecords() async {
+    final response = await http.get(Uri.parse('https://medical-app-backend-2025.herokuapp.com/patients'));
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
-      return data.cast<Map<String, String>>();
+      return data.cast<Map<String, dynamic>>();  // ← FIXED: dynamic, not String
     }
     throw Exception('Failed to load records');
   }
@@ -30,26 +30,41 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Medical Records')),
-      body: FutureBuilder<List<Map<String, String>>>(
+      appBar: AppBar(
+        title: const Text('Medical Records'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
         future: futureRecords,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final records = snapshot.data!;
             return ListView.builder(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16),
               itemCount: records.length,
               itemBuilder: (context, index) {
                 final record = records[index];
                 return Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
-                    title: Text(record['name'] ?? 'Unknown'),
-                    subtitle: Text(
-                      'Condition: ${record['condition']}\nDate: ${record['date']}',
+                    leading: const Icon(Icons.person, color: Colors.blue, size: 40),
+                    title: Text(
+                      record['name'] ?? 'Unknown Patient',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Condition: ${record['condition'] ?? 'N/A'}'),
+                        Text('Date: ${record['date'] ?? 'N/A'}'),
+                      ],
+                    ),
+                    trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Selected: ${record['name']}')),
+                        SnackBar(content: Text('Viewing record for ${record['name']}')),
                       );
                     },
                   ),
@@ -57,7 +72,15 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen> {
               },
             );
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error, color: Colors.red, size: 64),
+                  Text('Error: ${snapshot.error}'),
+                ],
+              ),
+            );
           }
           return const Center(child: CircularProgressIndicator());
         },

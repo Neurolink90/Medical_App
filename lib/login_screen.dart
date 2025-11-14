@@ -15,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _errorMessage = '';
 
   Future<void> _login() async {
-    final url = Uri.parse('http://127.0.0.1:5000/login');  // ← ONLY ONE LINE
+    final url = Uri.parse('https://medical-app-backend-2025.herokuapp.com/login');
     try {
       final response = await http.post(
         url,
